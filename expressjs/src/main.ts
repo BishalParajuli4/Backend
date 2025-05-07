@@ -1,5 +1,6 @@
 
 import express, {Request, Response} from "express";
+import productRouter from "../src/routes/productRoute";
 
 
 const app = express();
@@ -8,6 +9,8 @@ const PORT = 3000;
 
 
 app.use(express.json());
+app.use("/products", productRouter);
+
 
 
 app.get('/',(req: Request, res: Response)=>{
@@ -17,3 +20,4 @@ app.listen(PORT,()=>{
     console.log(`Server is running : ${PORT}`);
 });
 
+export default app;
