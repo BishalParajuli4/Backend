@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import express from "express";
-import products, { createProduct } from "../models/product";
+import products, { createProduct, deleteProductById, getAllProduct, getProductById, updateProductById } from "../models/product";
 
 const router = express.Router();
 
@@ -46,6 +46,7 @@ const newProduct = createProduct ({
 // });
 
 export function getAllProductController(req:Request , res:Response){
+    const product = getAllProduct();
     res.json(products);
 };
 
@@ -57,26 +58,26 @@ export function putProductController (req: Request , res:Response){
     //     res.status(404).json({error : "No Product found"});
     // }
     const {name, price , description} = req.body;
-    const productIndex = products.findIndex((p)=>p.id === productId);
-    if (productIndex === -1)
-    {
-        res.status(404).json({error: "No product was found for given id"});
+    if(!name || !price || !description){
+        res.status(400).json({error: "Please provide appropriate data's"});
     };
+    const updatedProduct = updateProductById({
+        id: productId,
+        name: name,
+        price: price,
+        description: description,
+    });
+    if(!updateProductById){
+        res.status(500).json({error : "Internal server error "});
+    }
+    res.status(200).json(updatedProduct);
 
-    products[productIndex]={
-        ...products[productIndex],
-        name,
-        price,
-        description,
-    };
-
-    res.status(201).json(products[productIndex]);
 
 };
 
 export function getProductbyIdController (req: Request , res : Response){
     const productId = parseInt (req.params.id);
-    const product = products.find((p) => p.id === productId);
+   const product = getProductById(productId);
     if(!product) {
         res.status(404).json({error : "No Product Found"});
     }
@@ -86,8 +87,6 @@ export function getProductbyIdController (req: Request , res : Response){
 export function deleteProductController (req : Request , res : Response)
 {
     const productId = parseInt(req.params.id);
-    const productIndex = products.findIndex((p) => p.id === productId);
-
-    const deletedProducts = products.splice(productIndex,1);
-    res.status(200).json(deletedProducts);
+    const deletedProduct = deleteProductById(productId);            //object na bhayeko bhayera direct dina milyo natra :/id dina partheo
+    res.status(200).json("deletedProducts");
 };

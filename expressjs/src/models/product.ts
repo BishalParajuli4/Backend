@@ -43,4 +43,11 @@ export function updateProductById(input : Product)
         description: input.description,
     
     };
+    return products[index];
+}
+
+export function deleteProductById( id : number){
+    const productIndex = products.findIndex((p) => p.id === id);
+    const deletedProducts = products.splice(productIndex,1);
+    return deletedProducts;
 }
