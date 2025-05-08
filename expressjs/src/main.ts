@@ -1,6 +1,6 @@
 
 import express, {Request, Response} from "express";
-import productRouter from "../src/routes/productRoute";
+import router from "../src/routes/productRoute";
 
 
 const app = express();
@@ -9,7 +9,7 @@ const PORT = 3000;
 
 
 app.use(express.json());
-app.use("/products", productRouter);
+app.use("/products", router);
 
 
 

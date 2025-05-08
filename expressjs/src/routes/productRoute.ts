@@ -3,9 +3,10 @@ import { createProductController, deleteProductController, getAllProductControll
 const router = express.Router();
 
 router.post("/", createProductController);
-router.put(":/id", putProductController);
-router.get(":/id", getProductbyIdController);
+router.put("/:id", putProductController);
+router.get("/:id", getProductbyIdController);
 router.get("/", getAllProductController);
-router.delete("/", deleteProductController);
+router.delete("/:id", deleteProductController);
+
 
 export default router;

@@ -89,4 +89,8 @@ export function deleteProductController (req : Request , res : Response)
     const productId = parseInt(req.params.id);
     const deletedProduct = deleteProductById(productId);            //object na bhayeko bhayera direct dina milyo natra :/id dina partheo
     res.status(200).json("deletedProducts");
+
+    if(!deletedProduct){
+        res.status(404).json({error :" There is no data to delete"});
+    }
 };

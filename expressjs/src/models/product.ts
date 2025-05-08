@@ -47,7 +47,10 @@ export function updateProductById(input : Product)
 }
 
 export function deleteProductById( id : number){
-    const productIndex = products.findIndex((p) => p.id === id);
+    const productIndex = products.findIndex((p) => p.id == id);
     const deletedProducts = products.splice(productIndex,1);
+    if(productIndex == -1){
+        return null;
+    }
     return deletedProducts;
 }
